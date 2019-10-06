@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "g-progress-bar":"/components/process-bar/process-bar"
+  }
+}

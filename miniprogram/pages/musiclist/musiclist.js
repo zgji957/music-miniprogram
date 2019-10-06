@@ -13,7 +13,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log('options:',options)
+    wx.showLoading({
+      title: '加载中',
+    })
     wx.cloud.callFunction({
       name:'music',
       data:{
@@ -29,6 +31,8 @@ Page({
           name: res.result.playlist.name,
         }
       })
+      this._setMusiclist()
+      wx.hideLoading()
     })
   },
 
@@ -79,5 +83,9 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  _setMusiclist(){
+    wx.setStorageSync('musiclist', this.data.musiclist)
   }
 })
