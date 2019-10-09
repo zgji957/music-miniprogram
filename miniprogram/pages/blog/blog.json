@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
-}
+  "usingComponents": {
+    "g-search":"/components/search/search",
+    "g-login":"/components/login/login"
+  },
+  "navigationBarTitleText": "发现"
+} 

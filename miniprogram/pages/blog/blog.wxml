@@ -1,2 +1,27 @@
 <!--pages/blog/blog.wxml-->
-<text>pages/blog/blog.wxml</text>
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="publish-container" bind:tap="onPublish">
+      <i class="iconfont icon-fabu"></i>
+    </view>
+    <view class="search-container">
+      <g-search 
+        iconfont="iconfont"
+        icon-sousuo="icon-sousuo"
+      />
+    </view>
+  </view>
+
+  <!-- 博客卡片列表 -->
+  <view class="blog-list">
+   
+  </view>
+
+  <!-- 底部弹出 -->
+  <g-login modalShow="{{modalShow}}">
+    <view slot="slot1">1</view>
+    <view slot="slot2">2</view>
+  </g-login>
+
+</view>

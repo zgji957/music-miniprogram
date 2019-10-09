@@ -3,6 +3,8 @@ let musiclist = []
 let nowplayingIndex = 0
 // 音频管理器
 const backgroundAudioManager = wx.getBackgroundAudioManager()
+
+const app =getApp()
 Page({
 
   /**
@@ -11,6 +13,9 @@ Page({
   data: {
     picUrl:null,
     isPlaying:false,
+    isShowLyric:false,
+    lyric:'',
+    isSame:false, // 是否是用一首歌
   },
 
   /**
@@ -24,15 +29,33 @@ Page({
   },
 
   _loadMusicDetail(musicId){
-    backgroundAudioManager.stop()
+
+    if (musicId === app.getPlayingMusicId()){
+      this.setData({
+        isSame:true
+      })
+    }else{
+      this.setData({
+        isSame:false
+      })
+    }
+
+    if(!this.data.isSame){
+      backgroundAudioManager.stop()
+    }
     const musicDetail = musiclist[nowplayingIndex]
     console.log('musicDetail', musicDetail)
+
     wx.setNavigationBarTitle({
       title: musicDetail.name,
     })
+
     this.setData({
       picUrl:musicDetail.al.picUrl
     })
+    
+    app.setPlayingMusicId(musicId)
+
     wx.cloud.callFunction({
       name:'music',
       data:{
@@ -42,12 +65,39 @@ Page({
     }).then((res)=>{
       console.log('musicUrl:',res)
       const result = res.result
-      backgroundAudioManager.title = musicDetail.name
-      backgroundAudioManager.src = result.data[0].url
-      backgroundAudioManager.coverImgUrl = musicDetail.al.picUrl
-      backgroundAudioManager.singer = musicDetail.ar[0].name
+      if (!result.data[0].url){
+        wx.showToast({
+          title: '不能播放歌曲'
+        })
+      }
+      if (!this.data.isSame) {
+        backgroundAudioManager.title = musicDetail.name
+        backgroundAudioManager.src = result.data[0].url
+        backgroundAudioManager.coverImgUrl = musicDetail.al.picUrl
+        backgroundAudioManager.singer = musicDetail.ar[0].name
+      }
+    
       this.setData({
         isPlaying:true
+      })
+
+      // 获取歌词
+      wx.cloud.callFunction({
+        name:'music',
+        data:{
+          musicId,
+          $url:'lyric'
+        }
+      }).then((res)=>{
+        console.log('lyricc', res)
+        let lyric = '暂无歌词'
+        const lrc = res.result.lrc
+        if(lrc){
+          lyric = lrc.lyric 
+        }
+        this.setData({
+          lyric,
+        })
       })
     })
   },
@@ -78,6 +128,29 @@ Page({
       nowplayingIndex = 0
     }
     this._loadMusicDetail(musiclist[nowplayingIndex].id)
+  },
+
+  onChangeLyricShow(){
+    this.setData({
+      isShowLyric:!this.data.isShowLyric
+    })
+  },
+
+  musicTimeUpdate(event){
+    let curTime = event.detail.currentTime
+    this.selectComponent('.lyric').update(curTime)
+  },
+
+  onMusicPlay(){
+    this.setData({
+      isPlaying:true
+    })
+  },
+
+  onMusicPause(){
+    this.setData({
+      isPlaying:false
+    })
   },
 
   /**

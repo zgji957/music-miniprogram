@@ -4,16 +4,23 @@
 
 <view class="player-info">
   <!-- 封面信息 -->
-  <view class="player-disc {{isPlaying ? 'play' : ''}}">
+  <view class="player-disc {{isPlaying ? 'play' : ''}}" bind:tap="onChangeLyricShow" hidden='{{isShowLyric}}'>
     <image class="player-img rotation {{isPlaying ? '' : 'rotation-paused'}}" src="{{picUrl}}"></image>
   </view>
 
   <!-- 歌词 -->
-
+  <g-lyric class="lyric" isShowLyric="{{!isShowLyric}}" bind:tap="onChangeLyricShow" lyric='{{lyric}}'></g-lyric>
 
   <!-- 进度条 -->
   <view class="progress-bar">
-    <g-progress-bar></g-progress-bar>
+    <g-progress-bar 
+      bind:musicEnd="next" 
+      bind:musicTimeUpdate="musicTimeUpdate" 
+      bind:musicPause="onMusicPause"
+      bind:musicPlay="onMusicPlay"
+      isSame="{{isSame}}"
+    >
+    </g-progress-bar>
   </view>
 
   <!-- 控制面板 -->

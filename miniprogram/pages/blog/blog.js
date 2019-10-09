@@ -5,7 +5,30 @@ Page({
    * 页面的初始数据
    */
   data: {
+    modalShow:false
+  },
 
+  // 发布
+  onPublish(){
+
+    // 判断是否授权
+    wx.getSetting({
+      success:(res)=>{
+        console.log('auth',res)
+        if(res.authSetting['scope.userInfo']){
+          wx.getUserInfo({
+            success(res){
+              console.log(res)
+            }
+          })
+        }else{
+          this.setData({
+            modalShow:true 
+          })
+        }
+      }
+    })
+    
   },
 
   /**

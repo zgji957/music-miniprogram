@@ -6,8 +6,10 @@
       <movable-view 
         direction='horizontal' 
         damping='1000'
-        x='{{moviableDis}}'
+        x='{{movableDis}}'
         class="movable-view"
+        bindchange="onChange"
+        bindtouchend="onTouchEnd"
       />
     </movable-area>
     <progress 

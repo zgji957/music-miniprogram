@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "g-bottom-modal":"/components/bottom-modal/bottom-modal"
+  }
+}
