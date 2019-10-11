@@ -1,7 +1,10 @@
 {
   "usingComponents": {
     "g-search":"/components/search/search",
-    "g-login":"/components/login/login"
+    "g-login":"/components/login/login",
+    "g-blog-card":"/components/blog-card/blog-card",
+    "g-blog-ctrl":"/components/blog-ctrl/blog-ctrl"
   },
-  "navigationBarTitleText": "发现"
+  "navigationBarTitleText": "发现",
+  "enablePullDownRefresh":true
 } 

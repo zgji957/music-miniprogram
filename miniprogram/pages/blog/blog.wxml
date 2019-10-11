@@ -9,19 +9,26 @@
       <g-search 
         iconfont="iconfont"
         icon-sousuo="icon-sousuo"
+        bind:search="onSearch"
       />
     </view>
   </view>
 
   <!-- 博客卡片列表 -->
   <view class="blog-list">
-   
+    <block wx:for="{{blogList}}" wx:key="{{item._id}}">
+      <g-blog-card blog="{{item}}" bind:tap="gocomment" data-blogid = "{{item._id}}"/>
+      <g-blog-ctrl blogid="{{item._id}}"/>
+    </block>
   </view>
 
   <!-- 底部弹出 -->
-  <g-login modalShow="{{modalShow}}">
-    <view slot="slot1">1</view>
-    <view slot="slot2">2</view>
+  <g-login 
+    modalShow="{{modalShow}}"
+    bind:loginUserInfoSuccess="loginUserInfoSuccess"
+    bind:loginUserInfoFail="loginUserInfoFail"
+  >
+
   </g-login>
 
 </view>

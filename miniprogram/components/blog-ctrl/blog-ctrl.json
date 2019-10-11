@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "g-login":"/components/login/login",
+    "g-bottom-modal":"/components/bottom-modal/bottom-modal"
+  }
+}
