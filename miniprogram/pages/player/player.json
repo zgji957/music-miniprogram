@@ -2,5 +2,6 @@
   "usingComponents": {
     "g-progress-bar":"/components/process-bar/process-bar",
     "g-lyric":"/components/lyric/lyric"
-  }
+  },
+  "disableScroll": true
 }

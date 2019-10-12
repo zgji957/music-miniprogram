@@ -1,0 +1,2 @@
+<!--pages/profile-playhistory/profile-playhistory.wxml-->
+<g-musiclist musiclist="{{musiclist}}" />

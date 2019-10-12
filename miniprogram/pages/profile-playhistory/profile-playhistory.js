@@ -1,34 +1,32 @@
-// pages/profile/profile.js
+// pages/profile-playhistory/profile-playhistory.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    musiclist:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-  },
-
-  getCode(){
-    wx.showLoading({
-      title: '生成二维码中',
-    })
-    wx.cloud.callFunction({
-      name:"getCode"
-    }).then((res)=>{
-      wx.hideLoading()
-      console.log(res.result)
-      wx.previewImage({
-        urls: [res.result],
-        current: res.result
+    const openid = app.globalData.openid
+    const musicHistory = wx.getStorageSync(openid)
+    console.log('musicHistory', musicHistory)
+    if(!musicHistory.length){
+      wx.showModal({
+        title: '没有播放历史',
+        content: '',
       })
-    })
+    }else{
+      this.setData({
+        musiclist: musicHistory
+      })
+      wx.setStorageSync('musiclist', musicHistory)
+    }
   },
 
   /**

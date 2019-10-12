@@ -3,5 +3,5 @@
     "g-blog-card":"/components/blog-card/blog-card",
     "g-blog-ctrl":"/components/blog-ctrl/blog-ctrl"
   },
-  "navigationBarTitleText":"评论详情"
+  "navigationBarTitleText":"发布"
 }

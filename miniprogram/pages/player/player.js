@@ -1,5 +1,6 @@
 // pages/player/player.js
 let musiclist = []
+// 当前歌曲在列表中的索引
 let nowplayingIndex = 0
 // 音频管理器
 const backgroundAudioManager = wx.getBackgroundAudioManager()
@@ -71,6 +72,7 @@ Page({
         })
       }
       if (!this.data.isSame) {
+        this._saveHistory()
         backgroundAudioManager.title = musicDetail.name
         backgroundAudioManager.src = result.data[0].url
         backgroundAudioManager.coverImgUrl = musicDetail.al.picUrl
@@ -151,6 +153,24 @@ Page({
     this.setData({
       isPlaying:false
     })
+  },
+
+  // 保存历史
+  _saveHistory(){
+    const openid = app.globalData.openid
+    const music = musiclist[nowplayingIndex]
+    let musicHistory = wx.getStorageSync(openid)
+    let isHave = false;
+    for(let i=0;i<musicHistory.length;i++){
+      if(musicHistory[i].id===music.id){
+        isHave = true;
+        break;
+      }
+    }
+    if (!isHave){
+      musicHistory.unshift(music)
+    }
+    wx.setStorageSync(openid, musicHistory)
   },
 
   /**

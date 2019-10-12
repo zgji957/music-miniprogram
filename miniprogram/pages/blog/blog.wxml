@@ -18,7 +18,7 @@
   <view class="blog-list">
     <block wx:for="{{blogList}}" wx:key="{{item._id}}">
       <g-blog-card blog="{{item}}" bind:tap="gocomment" data-blogid = "{{item._id}}"/>
-      <g-blog-ctrl blogid="{{item._id}}"/>
+      <g-blog-ctrl blog="{{item}}" blogid="{{item._id}}"/>
     </block>
   </view>
 

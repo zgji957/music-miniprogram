@@ -1,52 +1,43 @@
-// pages/blog-comment/blog-comment.js
-import formatTime from '../../utils/formatTime.js'
+// pages/profile-bloghistory/profile-bloghistory.js
+const MAX_LIMIT = 10
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    blogId:'',
-    blog:{},
-    commentList:[]
+    blogList:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const { blogid:blogId} = options
-    console.log('options', options)
-    this.setData({
-      blogId,
-    })
-    this.getBlogDetailAndComment()
+    this._getHistory()
   },
 
-  // 获取blog详情和评论列表
-  getBlogDetailAndComment(){
-    const blogId = this.data.blogId
-    console.log('blogId', blogId)
+  _getHistory(){
     wx.showLoading({
       title: '加载中',
     })
     wx.cloud.callFunction({
       name:'blog',
       data:{
-        blogId,
-        $url:"detail"
+        $url: 'getBlogDetailOpenid',
+        start: this.data.blogList.length,
+        count: MAX_LIMIT
       }
     }).then((res)=>{
-      console.log('getBlogDetailAndComment', res)
-      wx.hideLoading()
-      let commentList = res.result.commentList.data;
-      for (let i = 0; i < commentList.length;i++){
-        commentList[i].createTime = formatTime(new Date(commentList[i].createTime))
-      }
+      wx.hideLoading() 
       this.setData({
-        blog:res.result.blogDetail[0],
-        commentList,
+        blogList: this.data.blogList.concat(res.result)
       })
+    })
+  },
+
+  goComment(event){
+    wx.navigateTo({
+      url: '../blog-comment/blog-comment?blogId='+event.target.dataset.blogid,
     })
   },
 
@@ -82,7 +73,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this._getHistory()
   },
 
   /**

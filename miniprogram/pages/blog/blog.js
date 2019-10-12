@@ -145,7 +145,11 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (event) {
+    const blog = event.target.dataset.blog
+    return {
+      title: blog.content,
+      path:'/pages/blog-comment/blog-comment?blogId='+blog._id
+    }
   }
 })

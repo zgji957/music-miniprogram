@@ -6,7 +6,9 @@
     "pages/musiclist/musiclist",
     "pages/player/player",
     "pages/blog-edit/blog-edit",
-    "pages/blog-comment/blog-comment"
+    "pages/blog-comment/blog-comment",
+    "pages/profile-playhistory/profile-playhistory",
+    "pages/profile-bloghistory/profile-bloghistory"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -30,7 +32,7 @@
         "selectedIconPath": "images/publish_select.png"
     },{
       "pagePath": "pages/profile/profile",
-      "text": "发布",
+      "text": "我",
       "iconPath": "images/my.png",
       "selectedIconPath": "images/my_select.png"
     }]
